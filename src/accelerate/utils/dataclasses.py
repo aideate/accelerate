@@ -26,7 +26,7 @@ import warnings
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import timedelta
-from typing import Any, Callable, Dict, Iterable, List, Literal, Optional, Tuple, get_args
+from typing import Any, Callable, Dict, Iterable, List, Literal, Optional, Tuple, get_args, Union
 
 import torch
 
@@ -1223,6 +1223,12 @@ class FullyShardedDataParallelPlugin:
     ignored_modules: Optional[Iterable[torch.nn.Module]] = field(
         default=None,
         metadata={"help": "A list of modules to ignore for FSDP."},
+    )
+    ignored_states: Union[
+        Optional[Iterable[torch.nn.Parameter]], Optional[Iterable[torch.nn.Module]]
+    ] = field(
+        default=None,
+        metadata={"help": "A list of modules or parameters to ignore for FSDP."},
     )
     state_dict_type: "typing.Any" = field(
         default=None,
